@@ -1,9 +1,24 @@
-# Security
+# Security policy
 
 ## Reporting a vulnerability
 
-Please report security issues privately through GitHub's **Report a vulnerability** feature when enabled. Do not include passwords, screenshots containing credentials, local network addresses, or full API responses in public issues.
+Please do not publish credentials, Keychain contents or router data in a public issue.
 
-## Credential handling
+Report a suspected security vulnerability privately through GitHub’s security advisory feature:
 
-AZ Status stores the A-Z Router password in macOS Keychain. Credentials must never be committed to this repository or included in diagnostic logs.
+`https://github.com/volfion/az-status/security/advisories/new`
+
+Include:
+
+- AZ Status version,
+- macOS version,
+- a description of the impact,
+- reproducible steps with secrets removed.
+
+## Supported version
+
+Security fixes are currently provided for the latest published release.
+
+## Data handling
+
+AZ Status communicates with the A-Z Router over the local network. The local password is stored in macOS Keychain. The application does not include analytics or advertising.
