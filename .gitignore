@@ -1,0 +1,22 @@
+# Xcode
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+
+# Distribution
+dist/
+*.dmg
+*.zip
+
+# macOS
+.DS_Store
+
+# Signing and secrets
+*.p12
+*.cer
+*.mobileprovision
+*.provisionprofile
+.env

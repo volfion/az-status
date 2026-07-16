@@ -1,0 +1,40 @@
+name: Release unsigned DMG
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Determine version
+        id: version
+        run: echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build app and DMG
+        run: ./scripts/build-release.sh "${{ steps.version.outputs.value }}"
+
+      - name: Generate Homebrew Cask
+        run: |
+          ./scripts/generate-cask.sh             "${{ steps.version.outputs.value }}"             "dist/AZ-Status-${{ steps.version.outputs.value }}.dmg"             > "dist/az-status.rb"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            dist/AZ-Status-${{ steps.version.outputs.value }}.dmg
+            dist/AZ-Status-${{ steps.version.outputs.value }}.dmg.sha256
+            dist/az-status.rb
+          body: |
+            ## Installation
+            Download the DMG, copy AZ Status to Applications, then Control-click the app and choose Open on first launch.
+
+            This build is ad-hoc signed and is not notarized by Apple.
